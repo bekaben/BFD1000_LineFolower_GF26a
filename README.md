@@ -4,6 +4,8 @@
 
 - [Read the documentation for project](docs/info.md)
 This project implements the combinatory logic for the BFD1000 Line follower sensor. This sensor includes 5 channels for line detection and two additional channels: Clip for collision and Near for distance.
+This project was first started as a Wokwi project at https://wokwi.com/projects/461375630008882177
+followed by a Verilog implementation for hardware simulations on the Nexuys4 FPGA board.
 
 ## Set up your Verilog project
 
