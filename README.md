@@ -1,14 +1,9 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project Template
+# BFD1000 5 Channel Line follower sensor with clip and obstacle detection
 
 - [Read the documentation for project](docs/info.md)
-
-## What is Tiny Tapeout?
-
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
-
-To learn more and get started, visit https://tinytapeout.com.
+This project implements the combinatory logic for the BFD1000 Line follower sensor. This sensor includes 5 channels for line detection and two additional channels: Clip for collision and Near for distance.
 
 ## Set up your Verilog project
 
@@ -36,7 +31,9 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 - [Submit your design to the next shuttle](https://app.tinytapeout.com/).
 - Edit [this README](README.md) and explain your design, how it works, and how to test it.
 - Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+- LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
+
+
+## Acknowldgement
+
+This project is carried out with the support of the IEEE Open Silicon initiative. and TinyTapout project, to learn more and get started, visit https://tinytapeout.com.
