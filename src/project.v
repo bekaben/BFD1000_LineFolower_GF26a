@@ -26,10 +26,10 @@ module tt_um_BFD100_Logic(
     assign PWM = ui_in[7];
     
     reg REnL=0, DirL=0, REnR=0, DirR=0;
-    wire EnL = REnL & PWM;
+    wire EnL = REnL & ~Clip & ~Near & PWM;
     assign uo_out[0] = EnL;
     assign uo_out[1] = DirL;
-    wire EnR = REnR & PWM;
+    wire EnR = REnR & ~Clip & ~Near & PWM;
     assign uo_out[4] = EnR;
     assign uo_out[5] = DirR;
     
@@ -44,8 +44,8 @@ module tt_um_BFD100_Logic(
     assign Out1R = EnR & ~DirR;
     assign Out2R = EnR & DirR;
     
-    always @(posedge clk or posedge Clip or posedge Near or negedge rst_n) begin
-       if(!rst_n || Clip || Near)begin
+    always @(posedge clk or negedge rst_n) begin
+       if(!rst_n)begin
             REnL<= 0;
             REnR<= 0;
             DirL <= 0;
