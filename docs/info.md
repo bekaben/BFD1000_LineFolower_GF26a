@@ -40,8 +40,15 @@ DirR = (s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s
 
 ## How to test
 
-Simulations are performed on the FPGA NEXYS4 Board with the AMD Vivado tool. 
-Connect the BFD1000 sensor to the pins and view outputs on the motor drivers
+Simulations are performed on the NEXYS4 FPGA board using the AMD Vivado tool. 
+Connect the BFD1000 sensor as follows:
+- S[5:1] to ui_in[4:0]
+- Clip to ui_in[5]
+- Near to ui_in[6]
+- PWM to ui_in[7] in case you want to add speed control
+
+The outputs EnR/L and Dirr/l are connected to the right and Left motor drivers, respectively.
+LEDs can also be used to analyze the control tasks on motors.
 
 ## External hardware
 
