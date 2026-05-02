@@ -22,10 +22,13 @@ module tt_BFD100_Logic (
     assign s5 = ui_in[4];
     assign Clip = ui_in[5];
     assign Near = ui_in[6];
+    assign PWM = ui_in[7];
     
-    reg EnL=0, DirL=0, EnR=0, DirR=0;
+    reg REnL=0, DirL=0, REnR=0, DirR=0;
+    wire EnL = REnL & PWM;
     assign uo_out[0] = EnL;
     assign uo_out[1] = DirL;
+    wire EnR = REnR & PWM;
     assign uo_out[4] = EnR;
     assign uo_out[5] = DirR;
     
@@ -42,15 +45,15 @@ module tt_BFD100_Logic (
     
     always @(posedge clk or posedge Clip or posedge Near or negedge rst_n) begin
        if(!rst_n || Clip || Near)begin
-            EnL<= 0;
-            EnR<= 0;
+            REnL<= 0;
+            REnR<= 0;
             DirL <= 0;
             DirR <= 0;
        end
        else begin
-            EnL <= (s1&s2&s3&~s4)|(s1&s2&s3&~s5)|(s1&s2&~s3&s5)|(s1&s2&~s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5);
+            REnL <= (s1&s2&s3&~s4)|(s1&s2&s3&~s5)|(s1&s2&~s3&s5)|(s1&s2&~s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5);
             DirL <= (s1&s2&s3&~s4)|(s1&s2&s3&~s5)|(s1&s2&~s3&s5)|(s1&s2&~s4&s5)|(~s1&~s2&~s3&~s4&~s5);
-            EnR <= (s1&s2&s3&~s5)|(s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s3&s4&s5);
+            REnR <= (s1&s2&s3&~s5)|(s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s3&s4&s5);
             DirR <= (s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s3&s4&s5);
         end
     end
