@@ -15,6 +15,7 @@ module tt_um_BFD100_Logic(
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
+    wire s1, s2, s3, s4, s5, Clip, Near, PWM;
     assign s1 = ui_in[0];
     assign s2 = ui_in[1];
     assign s3 = ui_in[2];
