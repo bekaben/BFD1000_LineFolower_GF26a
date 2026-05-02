@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2024 Your Name
+ * Copyright (c) 2026 Belkacem BENADDA
  * SPDX-License-Identifier: Apache-2.0
  */
 
 `default_nettype none
 
-module tt_um_example (
+module tt_BFD100_Logic (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -15,13 +15,51 @@ module tt_um_example (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-
+    assign s1 = ui_in[0];
+    assign s2 = ui_in[1];
+    assign s3 = ui_in[2];
+    assign s4 = ui_in[3];
+    assign s5 = ui_in[4];
+    assign Clip = ui_in[5];
+    assign Near = ui_in[6];
+    
+    reg EnL=0, DirL=0, EnR=0, DirR=0;
+    assign uo_out[0] = EnL;
+    assign uo_out[1] = DirL;
+    assign uo_out[4] = EnR;
+    assign uo_out[5] = DirR;
+    
+    wire Out1L, Out2L, Out1R, Out2R;
+    assign uo_out[2] = Out1L;
+    assign uo_out[3] = Out2L;
+    assign uo_out[6] = Out1R;
+    assign uo_out[7] = Out2R;
+    
+    assign Out1L = EnL & ~DirL;
+    assign Out2L = EnL & DirL;
+    assign Out1R = EnR & ~DirR;
+    assign Out2R = EnR & DirR;
+    
+    always @(posedge clk or posedge Clip or posedge Near or negedge rst_n) begin
+       if(!rst_n || Clip || Near)begin
+            EnL<= 0;
+            EnR<= 0;
+            DirL <= 0;
+            DirR <= 0;
+       end
+       else begin
+            EnL <= (s1&s2&s3&~s4)|(s1&s2&s3&~s5)|(s1&s2&~s3&s5)|(s1&s2&~s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5);
+            DirL <= (s1&s2&s3&~s4)|(s1&s2&s3&~s5)|(s1&s2&~s3&s5)|(s1&s2&~s4&s5)|(~s1&~s2&~s3&~s4&~s5);
+            EnR <= (s1&s2&s3&~s5)|(s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s3&s4&s5);
+            DirR <= (s1&~s2&s4&s5)|(s1&~s3&s4&s5)|(~s1&~s2&~s3&~s4&~s5)|(~s1&s3&s4&s5)|(~s2&s3&s4&s5);
+        end
+    end
+ 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, 1'b0};
 
 endmodule
